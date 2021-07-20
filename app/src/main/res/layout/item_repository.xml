@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp">
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable
+            name="repositoriesProfile"
+            type="com.valera.githubsearchusermvvm.model.RepositoriesProfile" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layoutClick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="70dp">
+
+            <TextView
+                android:id="@+id/textUserLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="70dp"
+                android:text="@{repositoriesProfile.name}"
+                android:textSize="20sp"
+                tools:text="Name" />
+
+            <TextView
+                android:id="@+id/textDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textUserLogin"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="75dp"
+                android:layout_marginBottom="5dp"
+                android:text="@{repositoriesProfile.description}"
+                android:textSize="14sp"
+                tools:text="Disc Disc Disc Disc Disc Disc Disc Disc Disc Disc Disc Disc" />
+
+            <TextView
+                android:id="@+id/textLanguage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textDescription"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="70dp"
+                android:layout_marginBottom="10dp"
+                android:text="@{repositoriesProfile.language}"
+                tools:text="koko" />
+
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/imageDownload"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center|right"
+            android:layout_marginRight="10dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_download_24" />
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
