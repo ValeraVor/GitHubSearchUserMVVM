@@ -1,52 +1,34 @@
 package com.valera.githubsearchusermvvm.ui
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.valera.githubsearchusermvvm.R
-import com.valera.githubsearchusermvvm.api.ApiService
-import com.valera.githubsearchusermvvm.db.AppDataBase
 import com.valera.githubsearchusermvvm.model.User
-import com.valera.githubsearchusermvvm.repositories.DownloadsRepository
-import com.valera.githubsearchusermvvm.repositories.UsersRepository
 import com.valera.githubsearchusermvvm.ui.usersfragment.RecyclerViewClickListener
+import com.valera.githubsearchusermvvm.ui.usersfragment.SearchUserViewModel
 import com.valera.githubsearchusermvvm.ui.usersfragment.UsersAdapter
 import com.valera.githubsearchusermvvm.utils.Resource
 import kotlinx.android.synthetic.main.search_user_fragment.*
 
-class SearchUserFragment : Fragment() , RecyclerViewClickListener {
+class SearchUserFragment : Fragment(R.layout.search_user_fragment) , RecyclerViewClickListener {
 
-    private lateinit var factory: MainViewModelFactory
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: SearchUserViewModel by viewModels { factory() }
 
     companion object {
         const val SEARCHED_USER = "searched_user"
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.search_user_fragment, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val api = ApiService()
-        val repositoryUsers = UsersRepository(api)
-        val repositoryDownloads = DownloadsRepository(AppDataBase(requireContext()))
-        factory = MainViewModelFactory(repositoryUsers, repositoryDownloads)
-
-        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.users.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
@@ -67,6 +49,7 @@ class SearchUserFragment : Fragment() , RecyclerViewClickListener {
             }
         })
 
+        viewModel.getUsers("foks")
         search_text.queryHint = getString(R.string.search_hint)
         search_text.isIconifiedByDefault = false
         search_text.setOnQueryTextListener(QueryTextListener {

@@ -18,8 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
-        bottomNav.setupWithNavController(navController)
+        val b = bottomNav.setupWithNavController(navController)
 
     }
+
+    override fun onSupportNavigateUp() = navController.navigateUp()
+
 }
